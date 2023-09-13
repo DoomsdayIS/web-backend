@@ -6,20 +6,59 @@ body {
 }
 
 .header {
+    margin-top: 50px;
     height: 100px;
-    position: relative;
-}
-
-.header h1 {
     font-family: "Bradley Hand ITC", cursive;
     color: #121212;
-    font-size: 50px;
-    text-shadow: white 0 0 5px;
     text-align: center;
+    text-decoration: none;
+    position: relative;
+}
+.header h1, p, div{
+    display: inline;
 }
 
-.header a {
-    text-decoration: none;
+
+.header h1{
+    font-size: 50px;
+    text-shadow: white 0 0 5px;
+}
+
+.authentication{
+    position: absolute;
+    right: 3%;
+    top: 10%;
+}
+
+.authentication_2{
+    position: absolute;
+    right: 5%;
+    top: 10%;
+}
+
+.authentication_2 span{
+    background-color: white;
+    padding: 5px 5px;
+    font-size: 15px;
+    font-family: "Monaco", cursive;
+    color: #121212;
+}
+
+
+
+.auth_field, .auth_button {
+    background-color: white;
+    border: solid 1px #C1F229;
+    outline: none;
+    box-shadow: inset 0 0 2px #C1F229;
+    padding: 5px 5px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 15px;
+    margin-left: 10px;
+    font-family: "Monaco", cursive;
+    color: #121212;
+    width: 85px;
 }
 
 .navigate ul {
@@ -308,6 +347,35 @@ hr {
 
 
 @media screen and (min-width: 250px) and (max-width: 1280px) {
+
+    .header {
+        margin-top: 30px;
+        height: 180px;
+    }
+    .header div{
+        display: block;
+        margin-top: 10px;
+    }
+
+
+    .header h1{
+        font-size: 60px;
+        text-shadow: white 0 0 5px;
+    }
+
+    .authentication{
+        position: relative;
+        justify-content: space-around;
+    }
+
+
+
+    .auth_field, .auth_button {
+        font-size: 28px;
+        width: 150px;
+        margin: 0 10px;
+    }
+
     .footer a, p {
         font-size: 15px;
     }
@@ -341,6 +409,12 @@ hr {
 
     .wish-list-header{
         font-size: 45px;
+    }
+
+    .wishes-count{
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
     }
 
     .add-element {
@@ -401,6 +475,38 @@ hr {
 }
 
 @media screen and (min-width: 250px) and (max-width: 650px) {
+    .header {
+        margin-top: 20px;
+        height: 250px;
+    }
+
+    .header div{
+        display: block;
+        margin-top: 10px;
+    }
+
+
+    .authentication{
+        flex-direction: column;
+    }
+
+    .auth_field, .auth_button {
+        font-size: 25px;
+        margin-top: 10px;
+    }
+
+    .authentication_2{
+        position: relative;
+        justify-content: space-around;
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .authentication_2 span{
+        display: none;
+    }
+
     .footer {
         display: none;
     }

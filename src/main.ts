@@ -11,6 +11,10 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');
 
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const hbs = require('hbs');
+  hbs.registerPartials(join(__dirname, '..', 'views/partials'));
+
   const port = process.env.PORT;
   if (port === undefined) {
     await app.listen(3000);
