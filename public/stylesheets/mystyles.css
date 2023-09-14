@@ -344,6 +344,12 @@ hr {
     border-radius: 100px;
 }
 
+.wishes-count{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
 
 
 @media screen and (min-width: 250px) and (max-width: 1280px) {
@@ -411,11 +417,6 @@ hr {
         font-size: 45px;
     }
 
-    .wishes-count{
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-    }
 
     .add-element {
         width: 80%;
