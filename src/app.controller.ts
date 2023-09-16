@@ -1,41 +1,57 @@
-import { Get, Controller, Render, UseInterceptors } from '@nestjs/common';
+import {
+  Get,
+  Controller,
+  Render,
+  UseInterceptors,
+  Param,
+  Body,
+  Post,
+} from '@nestjs/common';
 import { LoadTimeInterceptor } from './loadtime.interceptor';
+import { ApiExcludeEndpoint } from '@nestjs/swagger';
 
 @Controller()
 @UseInterceptors(LoadTimeInterceptor)
 export class AppController {
+
+  @ApiExcludeEndpoint(true)
   @Get()
   @Render('pages/index')
   root() {
     return {};
   }
+  @ApiExcludeEndpoint(true)
   @Get('index')
   @Render('pages/index')
-  root6() {
+  index() {
     return {};
   }
 
+  @ApiExcludeEndpoint(true)
   @Get('photos')
   @Render('pages/photos')
-  root2() {
+  photos() {
     return {};
   }
 
+  @ApiExcludeEndpoint(true)
   @Get('pictures')
   @Render('pages/pictures')
-  root3() {
+  pictures() {
     return {};
   }
 
+  @ApiExcludeEndpoint(true)
   @Get('wishlist')
   @Render('pages/wishlist')
-  root4() {
+  wishlist() {
     return {};
   }
 
-  @Get('api-example')
-  @Render('pages/api-example')
-  root5() {
-    return { message: 'hello' };
+  @ApiExcludeEndpoint(true)
+  @Get('register')
+  @Render('pages/register')
+  register() {
+    return {};
   }
 }

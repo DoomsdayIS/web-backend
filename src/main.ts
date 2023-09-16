@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as process from 'process';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -14,6 +15,15 @@ async function bootstrap() {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const hbs = require('hbs');
   hbs.registerPartials(join(__dirname, '..', 'views/partials'));
+
+  const config = new DocumentBuilder()
+    .setTitle('Articles API')
+    .setDescription('API')
+    .setVersion('0.1')
+    .addTag('Article')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   const port = process.env.PORT;
   if (port === undefined) {
