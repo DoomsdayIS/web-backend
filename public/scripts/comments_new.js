@@ -1,7 +1,7 @@
 async function fetch_json_comments() {
   try {
     let website_domain = 'https://web-backend-spk9.onrender.com';
-    let url = website_domain + '/comment/all';
+    const url = website_domain + '/comment/all';
     let response = await fetch(url);
     let all_jsons = await response.json();
     return all_jsons;
@@ -83,7 +83,7 @@ async function change_text() {
   title_input_field.value = '';
   content_input_field.value = '';
   let website_domain = 'https://web-backend-spk9.onrender.com';
-  let url = website_domain + '/comment/create';
+  const url = website_domain + '/comment/create';
   let comment = await post_request(url, {
     title: title,
     content: content,
