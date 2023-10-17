@@ -1,6 +1,6 @@
-import { Injectable, HttpException, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { Comment, Prisma } from '@prisma/client';
+import { Comment } from '@prisma/client';
 import { CommentDto } from './dto/create-comment.dto';
 
 @Injectable()
@@ -13,7 +13,6 @@ export class CommentService {
   }
 
   async find(id: number): Promise<Comment> {
-    if (!+id) throw new HttpException('Comment ID is not a number!', 400);
     const message = await this.prisma.comment.findUnique({
       where: {
         id: +id,
@@ -32,7 +31,13 @@ export class CommentService {
     }
   }
 
-  async comments(): Promise<Comment[]> {
-    return this.prisma.comment.findMany();
+  async comments(
+    cnt: number = 0,
+    get_all: boolean = false,
+  ): Promise<Comment[]> {
+    if (get_all) {
+      return this.prisma.comment.findMany();
+    }
+    return this.prisma.comment.findMany({ take: -cnt });
   }
 }

@@ -1,6 +1,6 @@
-import { Injectable, HttpException, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { Order, Prisma } from '@prisma/client';
+import { Order } from '@prisma/client';
 import { OrderDto } from './dto/create-order.dto';
 
 @Injectable()
@@ -12,8 +12,7 @@ export class OrderService {
     });
   }
 
-  async find(id: number): Promise<Order> {
-    if (!+id) throw new HttpException('Order ID is not a number!', 400);
+  async findById(id: number): Promise<Order> {
     const message = await this.prisma.order.findUnique({
       where: {
         id: +id,
@@ -21,14 +20,24 @@ export class OrderService {
     });
     if (message) {
       return message;
+    } else {
+      throw new NotFoundException();
     }
-    throw new NotFoundException('Order with this ID wasnt found!');
   }
 
-  async delete(id: number): Promise<void> {
-    const message = await this.find(id);
+  async findByUserId(user_id: number): Promise<Order[]> {
+    const message = await this.prisma.order.findMany({
+      where: {
+        userId: +user_id,
+      },
+    });
     if (message) {
-      await this.prisma.order.delete({ where: { id: +id } });
+      return message;
+    } else {
+      throw new NotFoundException();
     }
+  }
+  async get_all(): Promise<Order[]> {
+    return this.prisma.order.findMany();
   }
 }

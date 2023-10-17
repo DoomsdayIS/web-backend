@@ -13,7 +13,6 @@ import { ApiExcludeEndpoint } from '@nestjs/swagger';
 @Controller()
 @UseInterceptors(LoadTimeInterceptor)
 export class AppController {
-
   @ApiExcludeEndpoint(true)
   @Get()
   @Render('pages/index')

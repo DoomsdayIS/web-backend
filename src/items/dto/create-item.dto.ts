@@ -1,14 +1,18 @@
 import {
+  IsBoolean,
   IsInt,
   IsNotEmpty,
   IsNumber,
   IsOptional,
-  IsPositive,
   IsString,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ItemDto {
+  @IsNotEmpty()
+  @ApiProperty()
+  id: number;
+
   @IsNotEmpty()
   @IsString()
   @ApiProperty()
@@ -26,9 +30,12 @@ export class ItemDto {
 
   @IsOptional()
   @IsNumber()
-  @IsPositive()
   @ApiProperty()
   price: number;
+
+  @IsOptional()
+  @IsBoolean()
+  sold: boolean;
 
   @IsNotEmpty()
   @IsString()

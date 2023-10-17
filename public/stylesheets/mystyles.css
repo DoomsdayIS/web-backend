@@ -46,7 +46,7 @@ body {
 
 
 
-.auth_field, .auth_button {
+.auth_field, .auth_button, .create-order, .clear-button {
     background-color: white;
     border: solid 1px #C1F229;
     outline: none;
@@ -55,10 +55,10 @@ body {
     text-align: center;
     border-radius: 10px;
     font-size: 15px;
-    margin-left: 10px;
     font-family: "Monaco", cursive;
     color: #121212;
     width: 85px;
+    margin: 10px;
 }
 
 .navigate ul {
@@ -312,6 +312,9 @@ hr {
 
 .download-preloader{
     text-align: center;
+    display: block;
+    width: 50%;
+    margin: auto;
 }
 
 .download-preloader img{
@@ -403,6 +406,22 @@ hr {
     font-weight: lighter;
     margin-top: 100px;
 }
+
+.available-photos, .items-bag, .final-buttons {
+    display: block;
+    text-align: center;
+    width: 70%;
+    margin: auto;
+    font-family: Helvetica, serif;
+}
+
+.sale-photo {
+    margin: 20px;
+    border: solid 1px #C1F229;
+    border-radius: 15px;
+    padding: 10px 5px;
+}
+
 
 @media screen and (min-width: 250px) and (max-width: 1280px) {
 
