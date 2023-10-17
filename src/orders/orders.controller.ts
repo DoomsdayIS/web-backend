@@ -7,11 +7,20 @@ import {
   Param,
   BadRequestException,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBasicAuth,
+  ApiBody,
+  ApiCookieAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Order } from '@prisma/client';
 import { OrderDto } from './dto/create-order.dto';
 import { ItemService } from '../items/items.service';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiTags('Orders')
 @Controller('order')
@@ -41,6 +50,8 @@ export class OrderController {
   @ApiBody({
     type: OrderDto,
   })
+  @ApiCookieAuth()
+  @UseGuards(AuthGuard)
   @Post('create/:params')
   async createOrder(
     @Param('params') params: string,
@@ -93,13 +104,15 @@ export class OrderController {
     description: 'You successfully got all user orders.',
   })
   @ApiResponse({
-    status: 403,
+    status: 401,
     description: 'You have no permission to get all user orders.',
   })
   @ApiResponse({
     status: 404,
     description: 'There is no user with this ID.',
   })
+  @ApiCookieAuth()
+  @UseGuards(AuthGuard)
   @Get('user/:id')
   async getUserOrders(
     @Param('id', ParseIntPipe) user_id: number,
@@ -115,9 +128,11 @@ export class OrderController {
     description: 'You successfully got all orders.',
   })
   @ApiResponse({
-    status: 403,
+    status: 401,
     description: 'You have no permission to get all orders.',
   })
+  @ApiBasicAuth()
+  @UseGuards(AuthGuard)
   @Get('all')
   async getOrders(): Promise<Order[]> {
     return this.orderService.get_all();

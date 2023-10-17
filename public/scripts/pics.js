@@ -1,6 +1,6 @@
 async function fetch_json_photos() {
   try {
-    let website_domain = 'https://web-backend-spk9.onrender.com';
+    let website_domain = 'http://localhost:8080';
     const url = website_domain + '/item/pictures';
     let response = await fetch(url);
     let all_jsons = await response.json();
@@ -120,7 +120,7 @@ async function create_order() {
     localStorage.removeItem('cart');
     let params = cart_list.join('&');
     alert(params);
-    let website_domain = 'https://web-backend-spk9.onrender.com';
+    let website_domain = 'http://localhost:8080';
     const url = website_domain + '/order/create/' + params;
     alert(url);
     await post_request(url, {

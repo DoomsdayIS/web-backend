@@ -11,9 +11,12 @@ import {
   BadRequestException,
   Put,
   InternalServerErrorException,
+  UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBasicAuth,
   ApiBody,
+  ApiCookieAuth,
   ApiOperation,
   ApiParam,
   ApiResponse,
@@ -22,6 +25,7 @@ import {
 import { Item } from '@prisma/client';
 import { ItemDto } from './dto/create-item.dto';
 import { HttpExceptionFilter } from './http-exception.filter';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiTags('Items')
 @Controller('item')
@@ -41,12 +45,14 @@ export class ItemController {
     description: 'Comments wasnt created. Bad request.',
   })
   @ApiResponse({
-    status: 403,
+    status: 401,
     description: 'You have no permission to create an item.',
   })
   @ApiBody({
     type: ItemDto,
   })
+  @ApiBasicAuth()
+  @UseGuards(AuthGuard)
   @Post('create')
   @UseFilters(new HttpExceptionFilter())
   async createComment(@Body() CreateItemDto: ItemDto): Promise<Item> {
@@ -69,10 +75,6 @@ export class ItemController {
   @ApiResponse({
     status: 400,
     description: 'Item id should be an integer.',
-  })
-  @ApiResponse({
-    status: 403,
-    description: 'You have no permission to get a specific item.',
   })
   @ApiResponse({
     status: 404,
@@ -103,6 +105,8 @@ export class ItemController {
     status: 404,
     description: 'There is no item with this ID.',
   })
+  @ApiBasicAuth()
+  @UseGuards(AuthGuard)
   @Delete('specific/:id')
   async deleteItem(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return await this.itemService.delete(id);
@@ -196,13 +200,15 @@ export class ItemController {
     description: 'Bad request. Incorrect id or orderId',
   })
   @ApiResponse({
-    status: 403,
+    status: 401,
     description: 'You have no permission to update item.',
   })
   @ApiResponse({
     status: 404,
     description: 'There is no item with this ID.',
   })
+  @ApiBasicAuth()
+  @UseGuards(AuthGuard)
   @Put('update/:id')
   @UseFilters(new HttpExceptionFilter())
   async updateItem(

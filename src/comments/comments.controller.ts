@@ -9,9 +9,11 @@ import {
   ParseIntPipe,
   UseFilters,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBody,
+  ApiCookieAuth,
   ApiOperation,
   ApiParam,
   ApiResponse,
@@ -20,6 +22,7 @@ import {
 import { Comment } from '@prisma/client';
 import { CommentDto } from './dto/create-comment.dto';
 import { HttpExceptionFilter } from './http-exception.filter';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiTags('Comments')
 @Controller('comment')
@@ -45,6 +48,8 @@ export class CommentController {
   @ApiBody({
     type: CommentDto,
   })
+  @ApiCookieAuth()
+  @UseGuards(AuthGuard)
   @Post('create')
   @UseFilters(new HttpExceptionFilter())
   async createComment(@Body() CreateCommentDto: CommentDto): Promise<Comment> {
@@ -69,10 +74,6 @@ export class CommentController {
     description: 'Id should be an integer.',
   })
   @ApiResponse({
-    status: 403,
-    description: 'You have no permission to get a specific comment.',
-  })
-  @ApiResponse({
     status: 404,
     description: 'There is no comment with this ID.',
   })
@@ -94,13 +95,15 @@ export class CommentController {
     description: 'Id should be an integer.',
   })
   @ApiResponse({
-    status: 403,
+    status: 401,
     description: 'You have no permission to delete a specific comment.',
   })
   @ApiResponse({
     status: 404,
     description: 'There is no comment with this ID.',
   })
+  @ApiCookieAuth()
+  @UseGuards(AuthGuard)
   @Delete('specific/:id')
   async deleteComment(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return await this.commentService.delete(id);
@@ -126,9 +129,11 @@ export class CommentController {
     description: 'You successfully got all comments.',
   })
   @ApiResponse({
-    status: 403,
+    status: 401,
     description: 'You have no permission to get all comments.',
   })
+  @ApiCookieAuth()
+  @UseGuards(AuthGuard)
   @Get('all')
   async getAllComments(): Promise<Comment[]> {
     return this.commentService.comments(0, true);

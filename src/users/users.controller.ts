@@ -9,17 +9,21 @@ import {
   ParseIntPipe,
   UseFilters,
   InternalServerErrorException,
+  UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBasicAuth,
   ApiBody,
+  ApiCookieAuth,
   ApiOperation,
   ApiParam,
   ApiResponse,
-  ApiTags,
+  ApiTags
 } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 import { UserDto } from './dto/create-user.dto';
 import { HttpExceptionFilter } from '../items/http-exception.filter';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiTags('Users')
 @Controller('user')
@@ -60,13 +64,15 @@ export class UserController {
     description: 'User id should be an integer.',
   })
   @ApiResponse({
-    status: 403,
+    status: 401,
     description: 'You have no permission to do this operation.',
   })
   @ApiResponse({
     status: 404,
     description: 'There is no user with this ID.',
   })
+  @ApiCookieAuth()
+  @UseGuards(AuthGuard)
   @Get('byId/:id')
   async getUserById(@Param('id', ParseIntPipe) id: number): Promise<User> {
     return this.userService.findByID(id);
@@ -85,13 +91,15 @@ export class UserController {
     description: 'Email should be a string.',
   })
   @ApiResponse({
-    status: 403,
+    status: 401,
     description: 'You have no permission to do this operation.',
   })
   @ApiResponse({
     status: 404,
     description: 'There is no user with this email.',
   })
+  @ApiBasicAuth()
+  @UseGuards(AuthGuard)
   @Get('byEmail/:email')
   async getUserByEmail(@Param('email') email: string): Promise<User> {
     return this.userService.findByEmail(email);
@@ -111,13 +119,15 @@ export class UserController {
     description: 'Id should be an integer.',
   })
   @ApiResponse({
-    status: 403,
+    status: 401,
     description: 'You have no permission to do this operation.',
   })
   @ApiResponse({
     status: 404,
     description: 'There is no user with this id.',
   })
+  @ApiBasicAuth()
+  @UseGuards(AuthGuard)
   @Delete('byId/:id')
   async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return await this.userService.delete(id);
@@ -130,13 +140,15 @@ export class UserController {
     description: 'You successfully got all users.',
   })
   @ApiResponse({
-    status: 403,
+    status: 401,
     description: 'You have no permission to get all users.',
   })
   @ApiResponse({
     status: 500,
     description: 'Server isnt working right now.',
   })
+  @ApiBasicAuth()
+  @UseGuards(AuthGuard)
   @Get('all_users')
   @UseFilters(new HttpExceptionFilter())
   async getAllItems(): Promise<User[]> {

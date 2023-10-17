@@ -1,6 +1,6 @@
 async function fetch_json_comments() {
   try {
-    let website_domain = 'https://web-backend-spk9.onrender.com';
+    let website_domain = 'http://localhost:8080';
     const url = website_domain + '/comment/latest';
     let response = await fetch(url);
     let all_jsons = await response.json();
@@ -82,7 +82,7 @@ async function change_text() {
   const content = content_input_field.value.trim();
   title_input_field.value = '';
   content_input_field.value = '';
-  let website_domain = 'https://web-backend-spk9.onrender.com';
+  let website_domain = 'http://localhost:8080';
   const url = website_domain + '/comment/create';
   let comment = await post_request(url, {
     title: title,
