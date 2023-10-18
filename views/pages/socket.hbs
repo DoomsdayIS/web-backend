@@ -67,7 +67,7 @@
       }
     },
     created() {
-      this.socket = io('http://localhost:8080')
+      this.socket = io('https://web-backend-spk9.onrender.com')
       this.socket.on('msgToClient', (message) => {
         console.log(message);
         this.receivedMessage(message)
