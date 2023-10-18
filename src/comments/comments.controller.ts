@@ -12,6 +12,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBasicAuth,
   ApiBody,
   ApiCookieAuth,
   ApiOperation,
@@ -23,6 +24,8 @@ import { Comment } from '@prisma/client';
 import { CommentDto } from './dto/create-comment.dto';
 import { HttpExceptionFilter } from './http-exception.filter';
 import { AuthGuard } from '../auth/auth.guard';
+import { Session } from '../auth/session.decorator';
+import { SessionContainer } from 'supertokens-node/recipe/session';
 
 @ApiTags('Comments')
 @Controller('comment')
@@ -48,11 +51,14 @@ export class CommentController {
   @ApiBody({
     type: CommentDto,
   })
-  @ApiCookieAuth()
+  @ApiBasicAuth()
   @UseGuards(AuthGuard)
   @Post('create')
   @UseFilters(new HttpExceptionFilter())
-  async createComment(@Body() CreateCommentDto: CommentDto): Promise<Comment> {
+  async createComment(
+    @Session() session: SessionContainer,
+    @Body() CreateCommentDto: CommentDto,
+  ): Promise<Comment> {
     try {
       return await this.commentService.createComment(CreateCommentDto);
     } catch {

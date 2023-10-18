@@ -6,11 +6,13 @@ import * as process from 'process';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { SupertokensExceptionFilter } from './auth/auth.filter';
+import Dashboard from 'supertokens-node/recipe/dashboard';
 import supertokens from 'supertokens-node';
+import EmailPassword from 'supertokens-node/recipe/emailpassword';
+import Session from 'supertokens-node/recipe/session';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.useGlobalPipes(new ValidationPipe());
@@ -26,6 +28,19 @@ async function bootstrap() {
     credentials: true, //access-control-allow-credentials:true
     optionSuccessStatus: 200,
   };
+  supertokens.init({
+    appInfo: {
+      apiDomain: 'https://web-backend-spk9.onrender.com',
+      appName: 'web-backend',
+      websiteDomain: 'https://web-backend-spk9.onrender.com',
+    },
+    recipeList: [
+      // TODO: Initialise other recipes
+      Dashboard.init(),
+      EmailPassword.init(),
+      Session.init(),
+    ],
+  });
 
   app.use(cors(corsOptions)); // Use this after the variable declaration
   app.enableCors({

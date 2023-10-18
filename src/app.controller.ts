@@ -27,6 +27,13 @@ export class AppController {
   }
 
   @ApiExcludeEndpoint(true)
+  @Get('socket')
+  @Render('pages/socket')
+  socket() {
+    return {};
+  }
+
+  @ApiExcludeEndpoint(true)
   @Get('photos')
   @Render('pages/photos')
   photos() {

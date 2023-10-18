@@ -25,6 +25,22 @@ async function register() {
   }
   let website_domain = 'https://web-backend-spk9.onrender.com';
   const url = website_domain + '/user/create';
+  let supertokens_response = await post_request(
+    'https://web-backend-spk9.onrender.com/auth/signup',
+    {
+      formFields: [
+        {
+          id: 'email',
+          value: email,
+        },
+        {
+          id: 'password',
+          value: pass1,
+        },
+      ],
+    },
+  );
+  alert(supertokens_response.user.id);
   let user = await post_request(url, {
     email: email,
     password: pass1,

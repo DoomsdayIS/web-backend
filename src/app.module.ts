@@ -8,6 +8,7 @@ import { OrdersModule } from './orders/orders.module';
 import { ItemsModule } from './items/items.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { AppGateway } from './app.gateway';
 
 @Module({
   imports: [
@@ -27,6 +28,6 @@ import { ConfigModule } from '@nestjs/config';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService, PrismaService, AppGateway],
 })
 export class AppModule {}

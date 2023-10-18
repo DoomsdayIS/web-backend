@@ -46,7 +46,7 @@ body {
 
 
 
-.auth_field, .auth_button, .create-order, .clear-button {
+.auth_field_email, .auth_field_pass, .auth_button, .logout_button, .create-order, .clear-button {
     background-color: white;
     border: solid 1px #C1F229;
     outline: none;
@@ -452,7 +452,7 @@ hr {
 
 
 
-    .auth_field, .auth_button {
+    .auth_field_email, .auth_field_pass, .auth_button, .logout_button {
         font-size: 28px;
         width: 150px;
         margin: 0 10px;
@@ -570,7 +570,7 @@ hr {
         flex-direction: column;
     }
 
-    .auth_field, .auth_button {
+    .auth_field_email, .auth_field_pass, .auth_button, .logout_button {
         font-size: 25px;
         margin-top: 10px;
     }

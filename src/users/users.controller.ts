@@ -18,7 +18,7 @@ import {
   ApiOperation,
   ApiParam,
   ApiResponse,
-  ApiTags
+  ApiTags,
 } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 import { UserDto } from './dto/create-user.dto';
